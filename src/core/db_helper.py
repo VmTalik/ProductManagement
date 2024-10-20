@@ -36,14 +36,13 @@ class DatabaseHelper:
 
 
 def create_db_helper(
-        test_db: bool = False,
         echo: bool = settings.engine_config.echo,
         echo_pool: bool = settings.engine_config.echo_pool,
         max_overflow: int = settings.engine_config.max_overflow,
         pool_size: int = settings.engine_config.pool_size
 ) -> DatabaseHelper:
     return DatabaseHelper(
-        url=get_db_url(test_db=test_db),
+        url=get_db_url(),
         echo=echo,
         echo_pool=echo_pool,
         max_overflow=max_overflow,
