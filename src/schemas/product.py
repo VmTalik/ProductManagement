@@ -1,9 +1,9 @@
-from pydantic import BaseModel, Field, ConfigDict, PositiveInt, conint, condecimal
+from pydantic import BaseModel, Field, ConfigDict, PositiveInt, conint, condecimal, constr
 
 
 class ProductBase(BaseModel):
     name: str = Field(..., min_length=2, max_length=100, description="Название")
-    description: str = Field(..., default=None, max_length=900, description="Описание")
+    description: str = Field(..., max_length=900, description="Описание")
     price: condecimal(gt=0, decimal_places=2) = Field(..., description="Цена")
     category_id: PositiveInt = Field(..., description=" Id категории")
 
@@ -28,6 +28,10 @@ class ProductReadResponse(ProductBase):
 
 class ProductUpdate(ProductBase):
     pass
+
+
+class ProductFieldUpdate(BaseModel):
+    price: condecimal(gt=0, decimal_places=2)
 
 
 class ProductUpdateResponse(ProductCreateResponse):

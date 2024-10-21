@@ -12,4 +12,4 @@ class ProductCategory(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(80), nullable=False)
     description: Mapped[str] = mapped_column(Text)
-    product_list: Mapped[list["Product"]] = relationship(back_populates=__tablename__)
+    product_list: Mapped[list["Product"]] = relationship(back_populates="category")

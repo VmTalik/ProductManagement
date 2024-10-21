@@ -1,5 +1,5 @@
 from .base import BaseCRUDRepository
-from schemas import ProductCategoryCreate, ProductCategoryUpdate
+from schemas import ProductCategoryCreate, ProductCategoryUpdate, ProductCategoryFieldUpdate
 from models import ProductCategory
 from sqlalchemy import select, Result
 from fastapi import HTTPException
@@ -33,27 +33,26 @@ class ProductCategoryCRUDRepository(BaseCRUDRepository):
 
     async def update_product_category(
             self, product_category_id,
-            product_update: ProductCategoryUpdate
-    ) -> ProductCategory | None:
-        product_category = await self.async_session.get(ProductCategory, product_category_id)
-        if not product_category:
-            raise HTTPException(status_code=404, detail="Обновление невозможно, категория товаров не найдена!")
-        for name, value in product_update.model_dump().items():
-            setattr(product_category, name, value)
-        await self.async_session.commit()
-        return product_category
-
-    async def update_product_category_description(
-            self,
-            product_category_id: int,
             product_category_update: ProductCategoryUpdate
     ) -> ProductCategory | None:
         product_category = await self.async_session.get(ProductCategory, product_category_id)
         if not product_category:
+            raise HTTPException(status_code=404, detail="Обновление невозможно, категория товаров не найдена!")
+        for name, value in product_category_update.model_dump().items():
+            setattr(product_category, name, value)
+        await self.async_session.commit()
+        return product_category
+
+    async def update_product_category_field(
+            self,
+            product_category_id: int,
+            product_category_field_update: ProductCategoryFieldUpdate
+    ) -> ProductCategory | None:
+        product_category = await self.async_session.get(ProductCategory, product_category_id)
+        if not product_category:
             raise HTTPException(status_code=404, detail="Категория товаров не найдена!")
-        product_description_update = product_category_update.description
-        if product_description_update is not None:
-            product_category.description = product_description_update
+        if product_category_field_update is not None:
+            product_category.description = product_category_field_update.description
         await self.async_session.commit()
         return product_category
 

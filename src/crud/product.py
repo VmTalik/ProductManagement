@@ -1,5 +1,5 @@
 from .base import BaseCRUDRepository
-from schemas import ProductCreate, ProductUpdate
+from schemas import ProductCreate, ProductUpdate, ProductFieldUpdate
 from models import Product
 from sqlalchemy import select, Result
 from fastapi import HTTPException
@@ -37,13 +37,16 @@ class ProductCRUDRepository(BaseCRUDRepository):
         await self.async_session.commit()
         return product
 
-    async def update_product_price(self, product_id: int, product_update: ProductUpdate) -> Product | None:
+    async def update_product_field(
+            self, product_id: int,
+            product_field_update: ProductFieldUpdate
+    ) -> Product | None:
         product = await self.async_session.get(Product, product_id)
         if not product:
             raise HTTPException(status_code=404, detail="Товар не найден!")
-        product_price_update = product_update.price
-        if product_price_update is not None:
-            product.price = product_price_update
+
+        if product_field_update.price is not None:
+            product.price = product_field_update.price
         await self.async_session.commit()
         return product
 

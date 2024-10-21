@@ -3,15 +3,17 @@ __all__ = (
     "ProductCreateResponse",
     "ProductReadResponse",
     "ProductUpdate",
+    "ProductFieldUpdate",
     "ProductUpdateResponse",
     "ProductDelete",
     "ProductCategoryCreate",
     "ProductCategoryCreateResponse",
     "ProductCategoryReadResponse",
+    "ProductCategoryReadWithProductListResponse",
     "ProductCategoryUpdate",
+    "ProductCategoryFieldUpdate",
     "ProductCategoryUpdateResponse",
-    "ProductCategoryDelete",
-
+    "ProductCategoryDelete"
 )
 
 from .product import (
@@ -19,6 +21,7 @@ from .product import (
     ProductCreateResponse,
     ProductReadResponse,
     ProductUpdate,
+    ProductFieldUpdate,
     ProductUpdateResponse,
     ProductDelete
 )
@@ -26,7 +29,9 @@ from .product_category import (
     ProductCategoryCreate,
     ProductCategoryCreateResponse,
     ProductCategoryReadResponse,
+    ProductCategoryReadWithProductListResponse,
     ProductCategoryUpdate,
+    ProductCategoryFieldUpdate,
     ProductCategoryUpdateResponse,
     ProductCategoryDelete
 )
