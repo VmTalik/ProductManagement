@@ -11,7 +11,7 @@ services:
       - postgresql-data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
-    restart: always
+    restart: on-failure
   app:
     container_name: product_management_app
     build: .
